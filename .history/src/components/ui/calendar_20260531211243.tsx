@@ -1,0 +1,71 @@
+'use client';
+
+import * as React from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { DayPicker } from 'react-day-picker';
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
+
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+
+function Calendar({
+  className,
+  classNames,
+  showOutsideDays = true,
+  ...props
+}: CalendarProps) {
+  return (
+    <DayPicker
+      showOutsideDays={showOutsideDays}
+      className={cn('p-3', className)}
+      classNames={{
+        months: 'flex flex-col sm:flex-row gap-4',
+        month: 'space-y-4',
+        caption: 'flex justify-center pt-1 relative items-center gap-1',
+        caption_label: 'text-sm font-medium',
+        caption_dropdowns: 'flex gap-2 items-center',
+        dropdown:
+          'text-sm border border-[#E5E7EB] rounded-md px-2 py-1 bg-white cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#006BFF] appearance-none',
+        dropdown_month: 'text-sm',
+        dropdown_year: 'text-sm',
+        nav: 'space-x-1 flex items-center',
+        nav_button: cn(
+          buttonVariants({ variant: 'outline' }),
+          'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
+        ),
+        nav_button_previous: 'absolute left-1',
+        nav_button_next: 'absolute right-1',
+        table: 'w-full border-collapse space-y-1',
+        head_row: 'flex',
+        head_cell: 'text-[#6B7280] rounded-md w-8 font-normal text-[0.8rem]',
+        row: 'flex w-full mt-2',
+        cell: cn(
+          'h-8 w-8 text-center text-sm p-0 relative',
+          '[&:has([aria-selected])]:bg-[#EEF5FF] [&:has([aria-selected])]:rounded-md'
+        ),
+        day: cn(
+          buttonVariants({ variant: 'ghost' }),
+          'h-8 w-8 p-0 font-normal aria-selected:opacity-100 rounded-md'
+        ),
+        day_selected:
+          'bg-[#006BFF] text-white hover:bg-[#006BFF] hover:text-white focus:bg-[#006BFF] focus:text-white',
+        day_today: 'bg-[#F3F4F6] text-[#1A1A1A] font-medium',
+        day_outside: 'text-[#9CA3AF] opacity-50',
+        day_disabled: 'text-[#D1D5DB] opacity-50 cursor-not-allowed',
+        day_range_middle:
+          'aria-selected:bg-[#EEF5FF] aria-selected:text-[#1A1A1A]',
+        day_hidden: 'invisible',
+        ...classNames,
+      }}
+      components={{
+        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
+        IconRight: () => <ChevronRight className="h-4 w-4" />,
+      }}
+      {...props}
+    />
+  );
+}
+
+Calendar.displayName = 'Calendar';
+
+export { Calendar };
